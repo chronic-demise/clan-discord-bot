@@ -17,6 +17,19 @@ module ClanBot
     # and have custom chat commands registered to it.
     class ClanBot < Discordrb::Bot
         
+        @@instance = nil
+        
+        class << self
+            protected :new
+        end
+        
+        def self.instance()
+            if @@instance.nil?
+                @@instance = ClanBot.new()
+            end
+            @@instance
+        end
+        
         def initialize()
             # A Hash of "cmd_name" => :cmd_handler
             @commands = {}
@@ -40,6 +53,7 @@ module ClanBot
             end
             
         protected
+            
             def handle_command(event)
                 input = event.content
                 prefix = Config::COMMAND[:"prefix"]

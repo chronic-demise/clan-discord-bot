@@ -1,22 +1,16 @@
 require_relative 'clanbot/clanbot'
-require_relative 'commands'
 require_relative 'config'
 
-# Start the bot
-bot = ClanBot::ClanBot.new()
+# Create the bot.
+bot = ClanBot::ClanBot.instance()
 
 # Print the invite URL (for the bot to join the channel)
 puts("This bot's invite URL is: #{bot.invite_url}")
 
-# Register custom commands
-bot.register_cmd("events", method(:do_events))
-bot.register_cmd("rng",    method(:do_rng))
-bot.register_cmd("code",   method(:do_code))
+# Load all commands from the 'commands/' directory
+Dir["commands/*.rb"].each {
+    |file| require_relative file
+}
 
-# Only register the 'sig' command if we have a banner endpoint set.
-if !Config::COMMAND[:"sig_banner_url"].empty?
-    bot.register_cmd("sig", method(:do_sig))
-end
-
-# And finally, start it
+# And finally, start it!
 bot.run()
