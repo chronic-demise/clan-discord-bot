@@ -1,38 +1,36 @@
 # Clan Discord Bot
 
+## Setup
+
 To use the clan discord bot, you must have Ruby 2.2 or higher. Install the gem using [Bundler](http://bundler.io/):
 
 ```
 bundle /path/to/clan-discord-bot
 ```
 
-The project makes use of several ruby gems, including:
+The project makes use the following Ruby gems:
  * [discordrb](https://github.com/meew0/discordrb) - Ruby Discord bot API
- * [mongo-ruby-driver](https://github.com/mongodb/mongo-ruby-driver) - MongoDB API
- * [partyhat](https://github.com/clooth/Partyhat) - RuneScape API accessor
 
-__NOTE:__ The above gems have the following dependencies, which will need to be installed separately:
- * [Ruby Development Kit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) (if on Windows)
- * [libcurl](https://curl.haxx.se/download.html) (needed for 'curb' ruby gem, a dependency of 'partyhat')
-    * On Windows, I had some trouble getting the 'curb' gem to install. When running:
-      ```
-      gem install curb -- --with-curl-include C:/dev/libs/curl-7.54.0-win32-mingw/include --with-curl-lib C:/dev/libs/curl-7.54.0-win32-mingw/bin
-      ```
-      I was getting this error:
-      ```
-      C:/Ruby23/lib/ruby/2.3.0/mkmf.rb:1746:in `dir_config': undefined method `split' for true:TrueClass (NoMethodError)
-          from extconf.rb:3:in `<main>'
-      ```
-      I'm not sure why the code was calling string methods on a boolean value, but I was able to work around it by hard-coding my curl include/lib paths inside the `dir_config` method in `mkmf.rb`:
-      ```
-      ## HACK - Hard-coding idir, ldir paths to work around a bug in the code...
-      idir = "C:/dev/libs/curl-7.54.0-win32-mingw/include"
-      ldir = "C:/dev/libs/curl-7.54.0-win32-mingw/bin"
-      ```
-      
 After that, modify `src/config.rb` to point to the correct values and run the bot:
 ```
 ruby src/main.rb
 ```
 
------
+## Other
+
+You may want to edit `src/commands.rb` to fit your needs (see `src/main.rb` to see which functions bind to which commands)
+
+If you add any useful commands, please send a pull request if you wish!
+
+## Planned features
+
+Some features I'd like to add:
+ * Personal timers. Set a timer for an upcoming date/time, or set a countdown timer for reminders.
+ * Event scheduling. Ability to add/edit/remove events (date/time, description, location). Anyone can query for a list of upcoming events.
+ * Clan leaderboards. Queries hiscores API for member rankings and provides commands for viewing various leaderboard categories.
+ * Member bios. Members can set a bio that is shown if others run a command to show that user's bio.
+ * ...other stuff like group-based permissions, ability to link discord user to character, and so on
+
+## License
+
+This project is freely available under the MIT License (MIT). See "LICENSE" for details.
